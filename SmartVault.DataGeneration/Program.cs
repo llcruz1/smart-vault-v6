@@ -86,13 +86,13 @@ namespace SmartVault.DataGeneration
                 var randomDayIterator = RandomDay().GetEnumerator();
                 randomDayIterator.MoveNext();
 
-                users.Add(new { Id = i, FirstName = $"FName{i}", LastName = $"LName{i}", DateOfBirth = randomDayIterator.Current.ToString("yyyy-MM-dd"), AccountId = i, Username = $"UserName-{i}", Password = "e10adc3949ba59abbe56e057f20f883e" });
-                accounts.Add(new { Id = i, Name = $"Account{i}" });
+                users.Add(new { Id = i, CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), FirstName = $"FName{i}", LastName = $"LName{i}", DateOfBirth = randomDayIterator.Current.ToString("yyyy-MM-dd"), AccountId = i, Username = $"UserName-{i}", Password = "e10adc3949ba59abbe56e057f20f883e" });
+                accounts.Add(new { Id = i, CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), Name = $"Account{i}" });
 
                 for (int d = 0; d < 10000; d++, documentNumber++)
                 {
                     var documentPath = new FileInfo(TEST_DOCUMENT_FILENAME).FullName;
-                    documents.Add(new { Id = documentNumber, Name = $"Document{i}-{d}.txt", FilePath = documentPath, Length = new FileInfo(documentPath).Length, AccountId = i });
+                    documents.Add(new { Id = documentNumber, CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), Name = $"Document{i}-{d}.txt", FilePath = documentPath, Length = new FileInfo(documentPath).Length, AccountId = i });
                 }
             }
 
@@ -101,9 +101,9 @@ namespace SmartVault.DataGeneration
 
         static void InsertRows(SQLiteConnection connection, SQLiteTransaction transaction, List<object> users, List<object> accounts, List<object> documents)
         {
-            connection.Execute("INSERT INTO User (Id, FirstName, LastName, DateOfBirth, AccountId, Username, Password) VALUES (@Id, @FirstName, @LastName, @DateOfBirth, @AccountId, @Username, @Password)", users, transaction);
-            connection.Execute("INSERT INTO Account (Id, Name) VALUES (@Id, @Name)", accounts, transaction);
-            connection.Execute("INSERT INTO Document (Id, Name, FilePath, Length, AccountId) VALUES (@Id, @Name, @FilePath, @Length, @AccountId)", documents, transaction);
+            connection.Execute("INSERT INTO User (Id, CreatedOn, FirstName, LastName, DateOfBirth, AccountId, Username, Password) VALUES (@Id, @CreatedOn, @FirstName, @LastName, @DateOfBirth, @AccountId, @Username, @Password)", users, transaction);
+            connection.Execute("INSERT INTO Account (Id, CreatedOn, Name) VALUES (@Id, @CreatedOn, @Name)", accounts, transaction);
+            connection.Execute("INSERT INTO Document (Id, CreatedOn, Name, FilePath, Length, AccountId) VALUES (@Id, @CreatedOn, @Name, @FilePath, @Length, @AccountId)", documents, transaction);
         }
 
         static IEnumerable<DateTime> RandomDay()
