@@ -5,6 +5,11 @@ obj/
 *.AssemblyInfoInputs.cache
 *.editorconfig
 
+# Files from DataGeneration folder
+TestDoc.txt
+testdb.sqlite
+testdb.sqlite-journal
+
 # User-specific files
 *.user
 *.userosscache
