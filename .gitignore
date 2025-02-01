@@ -1,0 +1,82 @@
+# Build files
+bin/
+obj/
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.editorconfig
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+
+# IDE-specific files
+.vscode/
+.vscode/*
+
+# Visual Studio
+*.vs/
+.vs/
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+*.pdb
+*.lock
+
+# Entity Framework
+*/Migrations/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.*
+
+# Package dependencies
+*.nuget/
+*.nupkg
+packages/
+.nuget/
+
+# macOS Finder
+.AppleDouble
+.LSOverride
+
+# Windows shortcuts
+desktop.ini
+$RECYCLE.BIN/
+
+# JetBrains Rider and IntelliJ IDEA
+.idea/
+.idea/*
+
+# Snapshots
+_snapshots/
+
+# Coverage tools
+coverage/
+*.coverage
+*.coveragexml
+*.testresults/
+
+# Azure pipelines
+*.coverage*
+TestResults/
+
+# Local SQLite database files (if any used for dev/test)
+*.db
+*.db-shm
+*.db-wal
+
+# Postgres (local development DB dumps or temporary backups)
+*.sql
+*.sql.gz
