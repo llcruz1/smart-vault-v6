@@ -25,7 +25,12 @@ namespace SmartVault.DataGeneration
             SQLiteConnection.CreateFile(configuration["DatabaseFileName"]);
             File.WriteAllText(TEST_DOCUMENT_FILENAME, GenerateTestDocument());
 
-            using var connection = new SQLiteConnection(string.Format(configuration?["ConnectionStrings:DefaultConnection"] ?? "", configuration?["DatabaseFileName"]));
+            using var connection = new SQLiteConnection(
+                string.Format(
+                    configuration?["ConnectionStrings:DefaultConnection"] ?? "", 
+                    configuration?["DatabaseFileName"]
+                )
+            );
             connection.Open();
             
             using var transaction = connection.BeginTransaction();
@@ -86,13 +91,38 @@ namespace SmartVault.DataGeneration
                 var randomDayIterator = RandomDay().GetEnumerator();
                 randomDayIterator.MoveNext();
 
-                users.Add(new { Id = i, CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), FirstName = $"FName{i}", LastName = $"LName{i}", DateOfBirth = randomDayIterator.Current.ToString("yyyy-MM-dd"), AccountId = i, Username = $"UserName-{i}", Password = "e10adc3949ba59abbe56e057f20f883e" });
-                accounts.Add(new { Id = i, CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), Name = $"Account{i}" });
+                users.Add(
+                    new { 
+                        Id = i, 
+                        CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), 
+                        FirstName = $"FName{i}", 
+                        LastName = $"LName{i}", 
+                        DateOfBirth = randomDayIterator.Current.ToString("yyyy-MM-dd"), 
+                        AccountId = i, Username = $"UserName-{i}", 
+                        Password = "e10adc3949ba59abbe56e057f20f883e" 
+                    }
+                );
+                accounts.Add(
+                    new { 
+                        Id = i, 
+                        CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), 
+                        Name = $"Account{i}" 
+                    }
+                );
 
                 for (int d = 0; d < 10000; d++, documentNumber++)
                 {
                     var documentPath = new FileInfo(TEST_DOCUMENT_FILENAME).FullName;
-                    documents.Add(new { Id = documentNumber, CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), Name = $"Document{i}-{d}.txt", FilePath = documentPath, Length = new FileInfo(documentPath).Length, AccountId = i });
+                    documents.Add(
+                        new { 
+                            Id = documentNumber, 
+                            CreatedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), 
+                            Name = $"Document{i}-{d}.txt", 
+                            FilePath = documentPath, 
+                            Length = new FileInfo(documentPath).Length, 
+                            AccountId = i 
+                        }
+                    );
                 }
             }
 
