@@ -6,7 +6,7 @@
 		<property name="FilePath" type="string" />
 		<property name="Length" type="int" />
 		<property name="AccountId" type="int" />
-		<property name="CreatedOn" type="DateTime" />
+		<property name="CreatedOn" type="System.DateTime" />
 	</propertyGroup>
 	<script>
 		CREATE TABLE Document (
