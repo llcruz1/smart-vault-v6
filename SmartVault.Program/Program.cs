@@ -36,8 +36,8 @@ namespace SmartVault.Program
             }
 
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("SmartVault.Program/appsettings.json").Build();
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json").Build();
 
             var databaseFileName = configuration?["DatabaseFileName"];
             Console.WriteLine($"Checking database: {databaseFileName}");
@@ -111,7 +111,7 @@ namespace SmartVault.Program
                 return;
             }
 
-            string outputFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"Account_{accountId}_ThirdFiles.txt");
+            string outputFilePath = Path.Combine(AppContext.BaseDirectory, $"Account_{accountId}_ThirdFiles.txt");
             using (var outputFile = new StreamWriter(outputFilePath))
             {
                 foreach (var file in files)

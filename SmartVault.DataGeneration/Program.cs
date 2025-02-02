@@ -12,15 +12,15 @@ using System.Xml.Serialization;
 
 namespace SmartVault.DataGeneration
 {
-    partial class Program
+    public partial class Program
     {
         private const string TEST_DOCUMENT_FILENAME = "TestDoc.txt";
         
-        static void Main(string[] args)
+        static public void Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("SmartVault.DataGeneration/appsettings.json").Build();
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json").Build();
 
             SQLiteConnection.CreateFile(configuration["DatabaseFileName"]);
             File.WriteAllText(TEST_DOCUMENT_FILENAME, GenerateTestDocument());
@@ -70,7 +70,7 @@ namespace SmartVault.DataGeneration
 
         static void CreateTables(SQLiteConnection connection, SQLiteTransaction transaction)
         {
-            var files = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "BusinessObjectSchema"));
+            var files = Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "BusinessObjectSchema"));
             foreach (var file in files)
             {
                 var serializer = new XmlSerializer(typeof(BusinessObject));
