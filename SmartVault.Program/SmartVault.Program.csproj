@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\BusinessObjectSchema\Account.xml" />
     <AdditionalFiles Include="..\BusinessObjectSchema\Document.xml" />
     <AdditionalFiles Include="..\BusinessObjectSchema\User.xml" />
