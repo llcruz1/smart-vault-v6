@@ -15,6 +15,7 @@ namespace SmartVault.Program
         {
             if (args.Length == 0)
             {
+                Console.WriteLine("Please provide an account ID as an argument.");
                 return;
             }
 
@@ -38,12 +39,22 @@ namespace SmartVault.Program
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("SmartVault.Program/appsettings.json").Build();
 
+            var databaseFileName = configuration?["DatabaseFileName"];
+            Console.WriteLine($"Checking database: {databaseFileName}");
+
+            if (!File.Exists(databaseFileName))
+            {
+                Console.WriteLine($"Database file '{databaseFileName}' does not exist. Consider running the data generation tool first.");
+                throw new FileNotFoundException($"Database file '{databaseFileName}' not found.");
+            }
+
             _connection = new SQLiteConnection(
                 string.Format(
                     configuration?["ConnectionStrings:DefaultConnection"] ?? "", 
-                    configuration?["DatabaseFileName"]
+                    databaseFileName
                 )
             );
+
             _connection.Open();
 
             Console.WriteLine($"Connected to database: {configuration?["DatabaseFileName"]}");
@@ -60,7 +71,22 @@ namespace SmartVault.Program
 
         private static void GetAllFileSizes()
         {
-            // TODO: Implement functionality
+            var query = "SELECT FilePath FROM Document";
+            var files = _connection.Query<string>(query).ToList();
+
+            Console.WriteLine($"Calculating total size of all files. Number of files: {files.Count}");
+
+            long totalSize = 0;
+            foreach (var filePath in files)
+            {
+                if (File.Exists(filePath))
+                {
+                    var fileInfo = new FileInfo(filePath);
+                    totalSize += fileInfo.Length;
+                }
+            }
+
+            Console.WriteLine($"Total size of all files: {totalSize} bytes");
         }
 
         private static void WriteEveryThirdFileToFile(string accountId)
