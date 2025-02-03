@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -14,13 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
-      <ProjectReference Include="..\SmartVault.DataGeneration\SmartVault.DataGeneration.csproj" />
-      <ProjectReference Include="..\SmartVault.Program\SmartVault.Program.csproj" />
+    <ProjectReference Include="..\SmartVault.DataGeneration\SmartVault.DataGeneration.csproj" />
+    <ProjectReference Include="..\SmartVault.Program\SmartVault.Program.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper.Extensions.SQLite" Version="4.2.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Moq" Version="4.16.1" />
   </ItemGroup>
 
   <ItemGroup>
